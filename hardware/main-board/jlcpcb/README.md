@@ -29,7 +29,7 @@ LCSC numbers looked up in November 2026. *B* = JLCPCB Basic part (no setup fee);
 | U7 | 74AHCT1G125GV SOT-753 | C12494 | E | LED level shifter |
 | U8 | AMS1117-3.3 SOT-223 | C6186 | B | |
 | U9 | PAM8403 SOP-16 | C5122557 | E | Slkor version, same pinout as the Diodes PAM8403DR |
-| U10–U15 | 74HC4051D SOIC-16 | C9386 | E | Nexperia |
+| U10–U15 | 74HC4051D SOIC-16 | C9386 | E | Nexperia. Any 74HC4051 in narrow SOIC-16 fits, see below |
 | SW1–SW46 | MT9105ET SOT-23 (top side) | C967861 | E | Hall sensors |
 | LED1–LED46 | SK6812MINI-E (bottom side, reverse mount) | C5149201 | E | |
 
@@ -46,6 +46,25 @@ JLCPCB's assembly stock is separate from LCSC's, so the LEDs can show 0 at JLCPC
 2. **Leave the LEDs off and solder them yourself.** On the parts page, untick the LED line ("Do not place"), and order 50 × C5149201 from lcsc.com with the other hand-solder parts. Each LED drops into its hole from the bottom side, lens facing up through the board. That's 46 × 4 pads, slow but doable with a fine tip and flux.
 
 Don't swap in a different LED (SK6812MINI-EA, -HS and so on) without checking its datasheet: the size and pinout must match the `SK6812MINI-E_MX_Reverse` footprint.
+
+### If JLCPCB shows 0 stock for the muxes (74HC4051D,653, C9386)
+
+The 4051 has the same pinout from every maker, so you can simply pick another one on JLCPCB's parts page. It must meet three conditions:
+
+- **Plain 74HC4051, not 74HCT4051 or CD4051B.** The muxes run from **3.3 V** (`+3V3_HE`). The HCT version needs 4.5–5.5 V, and the CD4051B is specified from 3 V with much higher on-resistance.
+- **Narrow SOIC-16 / SOP-16, 3.9 mm body, 1.27 mm pitch.** Not "208 mil", "7.4 mm" or TSSOP.
+- **6 per board.**
+
+Drop-in alternatives, in order of preference:
+
+| Maker | Part | LCSC |
+|---|---|---|
+| Texas Instruments | CD74HC4051M96 | C132065 |
+| Toshiba | 74HC4051D | C2673644 |
+| Nexperia | 74HC4051D-Q100,118 (automotive grade, same chip) | C546997 |
+| HGSEMI | 74HC4051M/TR | C507180 |
+
+You can also pre-order C9386 itself into your parts library, the same way as the LEDs above.
 
 ## Rotations: check them
 

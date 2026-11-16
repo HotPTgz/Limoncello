@@ -130,7 +130,7 @@ JLCPCB can make the board **and** solder all 173 SMD parts on both sides: the Ha
    - **Quantity:** as few as 2 boards; the minimum depends on what JLCPCB offers that day.
    - **Tooling holes:** let JLCPCB add them. The board has no fiducials, so let them add those too if the option is offered.
 3. Upload the BOM `LMN_v3_revC_BOM_JLCPCB.csv` and the CPL `LMN_v3_revC_CPL_JLCPCB.csv`.
-4. **Check the parts page.** Every line should show a matched part in stock. If a line is out of stock, choose an equivalent there, in the same package and with the same value. The folder README lists what matters for each part. **The LEDs are the exception:** if they show 0 stock, pre-order C5149201 into your parts library first (see the folder README).
+4. **Check the parts page.** Every line should show a matched part in stock. If a line is out of stock, choose an equivalent there, in the same package and with the same value. The folder README lists what matters for each part. **If the LEDs or the 74HC4051 muxes show 0 stock,** the folder README lists what to do: pre-order the LEDs (C5149201); for the muxes, pick one of the listed drop-in alternatives.
 5. **Check the placement preview, part by part.** See "Rotations" in the [folder README](../hardware/main-board/jlcpcb/README.md):
    - every IC's pin 1 sits on the board's pin-1 mark;
    - one Hall sensor and one LED look right (then all 46 do);
