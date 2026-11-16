@@ -51,7 +51,7 @@ Don't swap in a different LED (SK6812MINI-EA, -HS and so on) without checking it
 
 The 4051 has the same pinout from every maker, so you can simply pick another one on JLCPCB's parts page. It must meet three conditions:
 
-- **Plain 74HC4051, not 74HCT4051 or CD4051B.** The muxes run from **3.3 V** (`+3V3_HE`). The HCT version needs 4.5–5.5 V, and the CD4051B is specified from 3 V with much higher on-resistance.
+- **Plain 74HC4051, not 74HCT4051 or CD4051B.** The muxes run from **3.3 V** (`+3V3_HE`). The HCT version needs 4.5–5.5 V, and the CD4051B is rated from 3 V, so 3.3 V is right at its lower limit.
 - **Narrow SOIC-16 / SOP-16, 3.9 mm body, 1.27 mm pitch.** Not "208 mil", "7.4 mm" or TSSOP.
 - **6 per board.**
 
