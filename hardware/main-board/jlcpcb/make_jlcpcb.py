@@ -41,7 +41,7 @@ LCSC = {
     "74AHCT1G125": ("74AHCT1G125GV",                 "C12494",   "E  Nexperia 74AHCT1G125GV,125"),
     "AMS1117-3.3": ("AMS1117-3.3",                   "C6186",    "B  AMS AMS1117-3.3"),
     "PAM8403DR":   ("PAM8403",                       "C5122557", "E  Slkor PAM8403 (pin-compatible with Diodes PAM8403DR)"),
-    "74HC4051":    ("74HC4051D",                     "C9386",    "E  Nexperia 74HC4051D,653"),
+    "74HC4051":    ("74HC4051D",                     "C2673644", "E  Toshiba 74HC4051D (alt: Nexperia C9386)"),
     "MT9105ET":    ("MT9105ET",                      "C967861",  "E  Magn Tek MT9105ET"),
     "SK6812MINI-E": ("SK6812MINI-E",                 "C5149201", "E  OPSCO SK6812MINI-E (reverse mount)"),
 }
