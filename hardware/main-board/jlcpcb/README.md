@@ -4,7 +4,7 @@ These files let JLCPCB make the main board **and** solder the surface-mount part
 
 | File | What it is |
 |---|---|
-| `../LMN_v3_revC_gerbers.zip` | Gerbers and drill files (upload first) |
+| `LMN_v3_revC_gerbers.zip` | Gerbers and drill files, ready to upload first (same as the copy one folder up) |
 | `LMN_v3_revC_BOM_JLCPCB.csv` | BOM: Comment, Designator, Footprint, LCSC Part # |
 | `LMN_v3_revC_CPL_JLCPCB.csv` | Placement (CPL): Designator, Mid X, Mid Y, Layer, Rotation |
 | `make_jlcpcb.py` | Rebuilds both CSVs from the KiCad exports one folder up. Change part numbers here. |

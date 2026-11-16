@@ -123,7 +123,7 @@ See [POWER.md](POWER.md):
 
 JLCPCB can make the board **and** solder all 173 SMD parts on both sides: the Hall sensors on top; the LEDs, muxes, amp, regulator and passives underneath. You then solder only the through-hole parts (step 3, item 2). Files and the part list: [`hardware/main-board/jlcpcb/`](../hardware/main-board/jlcpcb).
 
-1. On jlcpcb.com, choose **Order now** and upload [`LMN_v3_revC_gerbers.zip`](../hardware/main-board/LMN_v3_revC_gerbers.zip). It should detect 2 layers and 330 × 180 mm. Keep 1.6 mm thickness and HASL lead-free (or ENIG). Pick any colour.
+1. On jlcpcb.com, choose **Order now** and upload [`LMN_v3_revC_gerbers.zip`](../hardware/main-board/jlcpcb/LMN_v3_revC_gerbers.zip) (all three upload files are in that one folder). It should detect 2 layers and 330 × 180 mm. Keep 1.6 mm thickness and HASL lead-free (or ENIG). Pick any colour.
 2. Turn on **PCB Assembly**:
    - **PCBA type: Standard.** Economic assembly only does one side, and this board has parts on both sides.
    - **Assembly side: Both sides.**
