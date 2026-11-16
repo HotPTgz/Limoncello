@@ -35,6 +35,18 @@ LCSC numbers looked up in November 2026. *B* = JLCPCB Basic part (no setup fee);
 
 **Stock changes daily.** JLCPCB checks stock live when you upload the BOM. If a part shows as out of stock, pick an equivalent in the same package (same value, same or higher voltage), then update `make_jlcpcb.py`. The tightest lines are the MT9105ET (a few thousand in stock) and the Slkor PAM8403 (a few hundred to a few thousand). For one board you need 46 and 1 of them.
 
+### If JLCPCB shows 0 stock for the LEDs (SK6812MINI-E, C5149201)
+
+JLCPCB's assembly stock is separate from LCSC's, so the LEDs can show 0 at JLCPCB even when LCSC has tens of thousands. Two ways round it:
+
+1. **Pre-order them into your JLCPCB parts library** (recommended).
+   - Go to *Parts Manager → Order Parts*, search **C5149201**, and order at least 50. Pre-ordered parts have a minimum quantity, and assembly uses a few spares.
+   - JLCPCB buys them from LCSC into your private library, which usually takes a few days.
+   - Once they show in *My Parts Lib*, upload the BOM again: the LED line will now match your own stock.
+2. **Leave the LEDs off and solder them yourself.** On the parts page, untick the LED line ("Do not place"), and order 50 × C5149201 from lcsc.com with the other hand-solder parts. Each LED drops into its hole from the bottom side, lens facing up through the board. That's 46 × 4 pads, slow but doable with a fine tip and flux.
+
+Don't swap in a different LED (SK6812MINI-EA, -HS and so on) without checking its datasheet: the size and pinout must match the `SK6812MINI-E_MX_Reverse` footprint.
+
 ## Rotations: check them
 
 KiCad and JLCPCB use a different "zero" for some packages. The script adds the usual corrections: SOT-23 / SOT-23-5 / SOT-223 +180°, SOIC / SOP +270°. Treat these as a first guess, especially on the bottom side.
