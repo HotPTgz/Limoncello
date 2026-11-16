@@ -52,6 +52,7 @@ Everything is fed from the Pi's 5 V rail (pins 2/4), so use the official 27 W (5
 
 ## Files
 - `gerbers/` + `*_gerbers.zip`: upload the zip to JLCPCB/PCBWay.
+- `jlcpcb/`: BOM and placement (CPL) files in JLCPCB format, with LCSC part numbers, for having the SMD parts assembled. See its README.
 - `*_BOM.csv`, `*_positions.csv`: BOM and pick-and-place (most SMD parts are on the bottom side).
 - `*.step`: 3D model of the board.
 - `kicad/`: KiCad 7 project with the custom footprints.

@@ -25,7 +25,7 @@ The main board is big and costs about $80 to make. A 4-key test board with the s
 
 - **Parts:** [SHOPPING_LIST.md](SHOPPING_LIST.md) (also as [CSV](shopping-list.csv)). The surface-mount parts come from LCSC. Most other parts are on Amazon or from the Pi and Teensy makers.
 - **Main board:** upload [`hardware/main-board/LMN_v3_revC_gerbers.zip`](../hardware/main-board/LMN_v3_revC_gerbers.zip) to JLCPCB or PCBWay: 2 layers, 1.6 mm, 330 × 180 mm.
-  - Optionally have the SMD parts assembled: use the BOM and positions CSVs in the same folder. The parts are on both sides.
+  - Optionally have JLCPCB solder the SMD parts: see [Ordering the main board from JLCPCB](#ordering-the-main-board-from-jlcpcb) below.
 - **Before you order:** print [`LMN_v3_revC_top.png`](../hardware/main-board/LMN_v3_revC_top.png) at 1:1 and check your Pi 5, Codec Zero and screen against it.
 
 ## 3. Assemble the main board
@@ -118,3 +118,25 @@ See [POWER.md](POWER.md):
 - why the Pi 5 needs a 5 A supply;
 - the UGREEN 20000 mAh bank and the 5 V 5 A converter;
 - the printed cradle, which also tilts the instrument 8° towards you.
+
+## Ordering the main board from JLCPCB
+
+JLCPCB can make the board **and** solder all 173 SMD parts on both sides: the Hall sensors on top; the LEDs, muxes, amp, regulator and passives underneath. You then solder only the through-hole parts (step 3, item 2). Files and the part list: [`hardware/main-board/jlcpcb/`](../hardware/main-board/jlcpcb).
+
+1. On jlcpcb.com, choose **Order now** and upload [`LMN_v3_revC_gerbers.zip`](../hardware/main-board/LMN_v3_revC_gerbers.zip). It should detect 2 layers and 330 × 180 mm. Keep 1.6 mm thickness and HASL lead-free (or ENIG). Pick any colour.
+2. Turn on **PCB Assembly**:
+   - **PCBA type: Standard.** Economic assembly only does one side, and this board has parts on both sides.
+   - **Assembly side: Both sides.**
+   - **Quantity:** as few as 2 boards; the minimum depends on what JLCPCB offers that day.
+   - **Tooling holes:** let JLCPCB add them. The board has no fiducials, so let them add those too if the option is offered.
+3. Upload the BOM `LMN_v3_revC_BOM_JLCPCB.csv` and the CPL `LMN_v3_revC_CPL_JLCPCB.csv`.
+4. **Check the parts page.** Every line should show a matched part in stock. If a line is out of stock, choose an equivalent there, in the same package and with the same value. The folder README lists what matters for each part.
+5. **Check the placement preview, part by part.** See "Rotations" in the [folder README](../hardware/main-board/jlcpcb/README.md):
+   - every IC's pin 1 sits on the board's pin-1 mark;
+   - one Hall sensor and one LED look right (then all 46 do);
+   - flip to the bottom view for the bottom parts.
+6. Place the order. JLCPCB's engineers review the placement and email you if anything needs confirming. Answer quickly, because the order waits until you do.
+
+**Rough cost:** the 2-layer board and parts are cheap. Most of the price is the double-sided Standard assembly setup and the extended-part loading fees (about 9 lines), so the total depends mostly on those. This is an estimate, not a quote: expect something like $100–200 for 2 boards before shipping. The real quote updates live as you go.
+
+**Not included, solder by hand:** Teensy 4.1 (on headers), J2 Pi socket, J3 Codec Zero header, the 4 encoders, the joystick, J5 jack, MK1 mic, and the JST-PH headers J4, J6, J7, J8. JLCPCB can also do through-hole assembly, but these parts are easy to hand-solder, and some (Teensy, joystick) are better bought separately.
