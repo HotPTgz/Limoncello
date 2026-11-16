@@ -1,0 +1,10 @@
+Qty,Value,Footprint,Side,References
+5,100nF,C_0805_2012Metric,bottom,C1 C2 C3 C4 C5
+1,10uF,C_1206_3216Metric,bottom,C6
+1,1uF,C_0805_2012Metric,bottom,C7
+4,M2,MountingHole_2.2mm_M2,top,H1 H2 H3 H4
+1,To Teensy,PinHeader_1x08_P2.54mm_Vertical,top,J1
+4,SK6812MINI-E,SK6812MINI-E_MX_Reverse,bottom,LED1 LED2 LED3 LED4
+1,330R,R_0805_2012Metric,bottom,R1
+4,MT9105ET,SW_MX_HE_SOT23,top,SW1 SW2 SW3 SW4
+1,74AHCT1G125,SOT-23-5,bottom,U1
