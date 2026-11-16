@@ -41,7 +41,7 @@ Details: [`hardware/main-board/README.md`](../hardware/main-board/README.md).
 3. **Cables** (table in the board README):
    - **J4:** 3 wires from the Codec Zero's AUX OUT pads. **Check L / GND / R on the Codec Zero's silkscreen before soldering.**
    - **J8:** to the Codec Zero's mic socket, through a 3.5 mm plug, using shielded wire.
-   - **J6 / J7:** to the speakers. Never connect an amp output to GND.
+   - **J6 / J7:** to the speakers. The leads drop through the 42 mm holes in the board. Both connectors are on the right, so the left speaker needs about 30 cm of twisted pair and the right one about 12 cm. Solder the speaker leads to pre-crimped JST-PH wires. Never connect an amp output to GND.
 4. **Switches:** screw the two printed plate halves on (step 6), clip the 46 switches through the plate, and press them flat onto the board.
 
 ## 4. Flash the Teensy
@@ -83,7 +83,7 @@ Details: [`enclosure/README.md`](../enclosure/README.md) (print settings for eac
 The order matters, because some screws are only reachable at certain stages.
 
 1. Glue the two halves of the top shell and of the tray. Melt the 6 M3 heat-set inserts into the top shell's bosses (plus the 2 in the tray if you use the cradle). Glue the lid magnets.
-2. Press the speakers into their rings under the grilles. Push the mic capsule into the seat at the bottom of the mic tube.
+2. Press the speakers, cone up, into the rings under the grilles. Then run a thin bead of glue (hot glue or E6000) around the outside of each rim; keep glue off the cone. If a ring is too tight, sand it lightly. Push the mic capsule into the seat at the bottom of the mic tube.
 3. Plug the Pi (with the cooler and stand-offs) and the Codec Zero in under the board. Connect the cables:
    - Teensy to one of the Pi's **lower** USB ports;
    - the screen's USB-C (power) to the Pi;

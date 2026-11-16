@@ -17,7 +17,7 @@ Reuse what you already have: a Pi 5, a Teensy 4.1, the encoders and the joystick
 | Teensy 4.1 (with pins) | 1 | $32.00 | Computer | [PJRC](https://www.pjrc.com/store/teensy41.html) | PJRC or SparkFun are cheapest. |
 | Waveshare 7.9inch Side Monitor (non-touch, 400 x 1280) | 1 | $80.00 | Display | [Amazon](https://www.amazon.com/s?k=Waveshare+7.9inch+Side+Monitor+400x1280) | The metal-cased monitor. Comes with an HDMI flat cable, a micro-HDMI adapter and a USB-C cable. |
 | Raspberry Pi Codec Zero | 1 | $27.00 | Audio | [PiShop](https://www.pishop.us/product/raspberry-pi-codec-zero/) | Audio in/out. Rarely on Amazon at list price. |
-| 40 mm speaker, 4 or 8 ohm, 2-3 W (pair) | 1 | $9.00 | Audio | [Amazon](https://www.amazon.com/s?k=40mm+4+ohm+3W+speaker) | Must fit the 42 mm cut-outs in the board. |
+| Speaker, 40 mm, 4 ohm, 3 W (Adafruit 3968) | 2 | $4.95 | Audio | [Adafruit](https://www.adafruit.com/product/3968) | 40 mm round, 20 mm tall: press-fits the rings under the grilles. Any round 40 mm 4-8 ohm speaker without mounting ears also fits. |
 | 6 mm electret mic capsule (10-pack) | 1 | $6.00 | Audio | [Amazon](https://www.amazon.com/s?k=6mm+electret+microphone+capsule) | One goes in MK1; the rest are spares. |
 | 3.5 mm mono/TRS plug, solderable or pigtail | 2 | $4.00 | Audio | [Amazon](https://www.amazon.com/s?k=3.5mm+male+plug+solder+type) | Mic cable from J8 to the Codec Zero's mic socket. Use shielded wire. |
 | CUI SJ1-3535NG switched 3.5 mm jack | 1 | $1.60 | Audio | [LCSC](https://www.lcsc.com/search?q=SJ1-3535NG) | J5, the headphone jack. The footprint is for this exact part. |

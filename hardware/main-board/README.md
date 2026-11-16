@@ -36,7 +36,7 @@ DRC: 0 clearance errors, 0 unconnected. The only warnings left are silkscreen an
 |---|---|---|
 | Codec Zero **P2 (AUX OUT)** pads | **J4** (JST-PH 3-pin: 1 = L, 2 = GND, 3 = R) | Solder 3 wires to P2. **Check L/GND/R on the Codec Zero silkscreen** (pin 1 is the square pad). |
 | **J8** (JST-PH 2-pin: 1 = mic +, 2 = GND) | Codec Zero mic socket | Mono 3.5 mm plug: tip = mic +, sleeve = GND. Shielded cable. |
-| **J6 / J7** (JST-PH 2-pin) | Left / right speaker | 40 mm, 4–8 Ω, 2–3 W. Twist each pair. Never connect either output terminal to GND (bridged outputs). |
+| **J6 / J7** (JST-PH 2-pin) | Left / right speaker | 40 mm, 4–8 Ω, 2–3 W. Run the leads down through the speaker's 42 mm hole in the board. J6 and J7 are both on the right, so the **left lead needs about 30 cm**, the right about 12 cm. Twist each pair. Never connect either output terminal to GND (bridged outputs). |
 
 ## Software (Raspberry Pi OS)
 1. With J3 wired to the HAT EEPROM, the Codec Zero is usually detected automatically. If it isn't, add `dtoverlay=rpi-codeczero` to `/boot/firmware/config.txt` (older images use `dtoverlay=iqaudio-codec`). Also comment out `dtparam=audio=on`.
