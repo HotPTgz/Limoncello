@@ -23,6 +23,8 @@ The `components/` renders show the electronics alone. The Pi 5 is Raspberry Pi's
 2. Convert the STEP inside it: `pip install cadquery-ocp`, then `python3 tools/step2stl.py 7_9inch-side-monitor-case.stp source/screen_waveshare.stl 0.05`.
 
 ## Parts to print (`stl/`)
+
+**All STLs in one file:** [`Limoncello_STL.zip`](Limoncello_STL.zip) (about 1 MB). On GitHub, open it and click the download button (*Download raw file*).
 | File | Qty | Material / settings | Notes |
 |---|---|---|---|
 | `top_left.stl`, `top_right.stl` | 1 each | PLA or PETG, 0.2 mm, 4 walls, 20 % infill | Printed top-down (the flat top on the bed gives a smooth finish). Supports only under the 4 screen corner brackets and the speaker rings, if your slicer asks. |

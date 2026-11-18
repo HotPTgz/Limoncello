@@ -70,6 +70,8 @@ Details: [SOFTWARE.md](SOFTWARE.md).
 
 Details: [`enclosure/README.md`](../enclosure/README.md) (print settings for each part and the full hardware list).
 
+All the STL files are also in one zip: [`enclosure/Limoncello_STL.zip`](../enclosure/Limoncello_STL.zip).
+
 - **Every part fits a 220 × 220 mm bed:**
   - the top shell, tray and switch plate come in two halves each, joined with 1.75 mm filament dowels and glue;
   - 22 labelled menu keys, 14 white and 10 black piano keys, 4 knobs;
