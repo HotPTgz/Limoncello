@@ -12,7 +12,7 @@ What has been checked, how it was checked, and what still needs real hardware. L
 | Mux wiring | 74HC4051 pinout vs U10–U15 | S0–S2, COM, E̅ = GND, VEE = GND, VCC = 3.3 V all correct |
 | LED wiring | SK6812MINI-E pinout (1 VDD, 2 DOUT, 3 GND, 4 DIN) | Correct. The chain runs through all 46 LEDs in one line |
 | Level shifter, regulator, MOSFET, amp | 74AHCT1G125, AMS1117-3.3, 2N7002, PAM8403 pinouts vs board | Correct |
-| Pi / Codec Zero headers | Pi 40-pin header (5 V, GND, I2C, I2S on GPIO 18–21, ID EEPROM, GPIO 22 mute) | Correct. GPIO 22 deliberately not passed to the Codec Zero |
+| Pi / Codec Zero headers | Pi 40-pin header (5 V, GND, I2C, I2S on GPIO 18–21, ID EEPROM, GPIO 22 mute) | Correct. J3 passes on only what the Codec Zero needs for audio (power, GND, I2C, I2S, ID EEPROM). Its own green/red LEDs (GPIO 23/24) and button (GPIO 27) are not wired. They would be hidden inside the case anyway. GPIO 22 (speaker mute) stays on the Limoncello board; the Codec Zero doesn't use it. |
 | Firmware ↔ board | Script compares `firmware/src/config.h` + `keymap.h` with the KiCad nets | All pins match. All 46 keys have the right mux, channel and LED position |
 | Firmware logic | Unit tests (`firmware/test`) on a PC, and `main.cpp` syntax-checked against stand-in Teensy headers | Pass |
 | Printed parts | Every STL checked for closed (watertight) meshes; size vs a 220 × 220 mm bed (Creality K1) | All watertight. Largest part 178 × 192 mm, so it fits |
@@ -25,8 +25,8 @@ What has been checked, how it was checked, and what still needs real hardware. L
 2. **The test board (4 keys).** It proves the sensor + magnet + footprint chain and the reading range. **Wait for it before ordering the main board.**
 3. **JLCPCB placement preview.** The rotations in the CPL are a first guess. Check pin 1 of every IC, plus one sensor and one LED.
 4. **1:1 printout.** Print `hardware/main-board/LMN_v3_revC_top.png` at 100 % and lay the Pi 5, Codec Zero and screen on it.
-5. **Flush-key test print.** It picks the key gap (`GAP` in the case source).
+5. **Flush-key test print** (`enclosure/flush_test/`). A small piece of the case top that sits on the test board, with 4 key openings at gaps of 0.35 / 0.45 / 0.55 / 0.65 mm. Pick the gap where the tile doesn't rub or wobble, then set `GAP` in the case source and re-export the keys and top shell.
 6. **Codec Zero AUX OUT pads (J4).** Check L / GND / R on its silkscreen before soldering.
-7. **Mic.** The electret capsule's GND leg is the one joined to its metal case. Also check the Codec Zero's mic socket gives the capsule bias, and test recording on the Pi (only tested with a simulated mic so far).
+7. **Mic.** The electret capsule's GND leg is the one joined to its metal case. Raspberry Pi lists the Codec Zero's 3.5 mm socket as an input for an external electret mic, and its built-in MEMS mic switches off when that socket is used. Still to test: recording on the Pi (only tested with a simulated mic so far).
 8. **DAW on the Pi.** Build and run the `lmn3-v3-wide` branch on the Pi 5 itself, at 1280 × 400.
 9. **Regulator temperature.** The AMS1117 feeds 46 Hall sensors (about 0.28 A, 7 mA max each). It burns about 0.5 W and will run warm, which is within its rating. Touch-check it after 10 minutes.
