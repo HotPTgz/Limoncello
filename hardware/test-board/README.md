@@ -18,14 +18,37 @@ The board is 87 × 42 mm, 2 layers. Design check (DRC): 0 errors, 0 unconnected.
 | `kicad/` | KiCad 7 project. |
 
 ## Parts to buy
-- From LCSC:
-  - about 10 × MT9105ET (spares are useful);
-  - 5 × SK6812MINI-E;
-  - 1 × 74AHCT1G125 (SOT-23-5);
-  - 0805 parts: 5 × 100 nF, 1 × 1 µF, 1 × 330 Ω;
-  - 1 × 10 µF 1206.
-- 1 × 1×8 pin header (2.54 mm), 4 × M2×10 screws and nuts, jumper wires.
-- 4 × Gateron Magnetic Jade switches. Use the same switch you plan to use for the full build.
+
+If JLCPCB assembled your boards, skip the LCSC list: you only need the rest.
+
+**From LCSC** (they sell passives in strips of 20–100, so you get spares for cents):
+
+| Part | Refs | Qty to order | LCSC |
+|---|---|---|---|
+| MT9105ET Hall sensor, SOT-23 | SW1–SW4 | 10 (4 + spares) | C967861 |
+| SK6812MINI-E reverse-mount LED | LED1–LED4 | 5 | C5149201 |
+| 74AHCT1G125 buffer, SOT-23-5 | U1 | 5 (minimum order) | C12494 |
+| 100 nF 0805 | C1–C5 | 1 strip | C49678 |
+| 1 µF 0805 | C7 | 1 strip | C28323 |
+| 330 Ω 0805 | R1 | 1 strip | C17630 |
+| 10 µF 1206 (22 µF is fine too) | C6 | 1 strip | C12891 (22 µF) |
+
+**Other parts:**
+- **Teensy 4.1** with pins. Your existing LMN-3's Teensy works for the test.
+- **4 × Gateron Magnetic Jade switches.** Use the same switch you plan to use for the full build.
+- **1 × 1×8 pin header**, 2.54 mm, plus **8 female–female jumper wires** to the Teensy. If your Teensy has no headers, use female–male wires to a breadboard instead.
+- **4 × M2 nuts**, plus either **4 × M2×10 screws** (plate only) or **4 × M2×35 screws** (plate + flush test panel). Get the M2×35 if you'll print the flush test, which you should.
+- **Micro-USB cable** (data, not charge-only) from the Teensy to your computer.
+
+## Parts to print
+
+| File | Qty | Notes |
+|---|---|---|
+| `plate/test_plate.stl` | 1 | Switch plate: holds the 4 switches. PLA, 0.2 mm, flat side down. Same file as `enclosure/flush_test/test_switch_plate.stl`. |
+| `enclosure/flush_test/flush_test_panel.stl` | 1 | Flush-key test panel: a piece of the case top with 4 openings at gaps of 0.35, 0.45, 0.55 and 0.65 mm. Print it top-down, like the real top shell. |
+| `enclosure/flush_test/flush_test_tiles_all.stl` | 1 set | The 4 key tiles: 2 white, 1 raised black, 1 menu tile (REC). Print in the colours and settings you'll use for the real keys. |
+
+Print the panel and tiles on the printer and filament you'll use for the case, because the gap you pick depends on both.
 
 ## Assembly
 1. **Top side:** solder the 4 Hall sensors. Keep them flat and centred on their pads, because that sets the distance to the magnet.
@@ -68,4 +91,4 @@ These are the same pins the rev C board uses.
 Keep the report (`r`) and a screenshot of the plotter: they tell you how to set the thresholds in `firmware/src/config.h` for your switches. If your results are unusual, please share them in an issue.
 
 ## Note for the full build
-These switches need a **plate** (1.5 mm) to hold them, and the rev C board needs one too: it isn't in the shopping list or the board files yet.
+These switches need a **plate** (1.5 mm) to hold them. The rev C plate is printed in two halves: `enclosure/stl/plate_left.stl` and `plate_right.stl`.
