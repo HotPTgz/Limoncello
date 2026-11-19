@@ -12,7 +12,8 @@ The board is 87 × 42 mm, 2 layers. Design check (DRC): 0 errors, 0 unconnected.
 | File | Use |
 |---|---|
 | `LMN_HE_test_gerbers.zip` | Upload to JLCPCB (2 layers, 1.6 mm, any colour). Five boards cost a few dollars. |
-| `LMN_HE_test_BOM.csv`, `*_positions.csv` | Parts list (and placement file, if you want JLCPCB to assemble it). |
+| `LMN_HE_test_BOM.csv`, `*_positions.csv` | Parts list and KiCad placement file. |
+| `jlcpcb/` | Ready-to-upload files for having JLCPCB solder the SMD parts (BOM + CPL with LCSC numbers, Gerber zip). See its README. |
 | `plate/test_plate.stl` (+ `.scad`) | 3D-printable switch plate: 1.5 mm plate on 3.5 mm legs, M2 screws. |
 | `firmware/` | Test sketch for the Teensy 4.1 (PlatformIO or Arduino IDE). |
 | `kicad/` | KiCad 7 project. |

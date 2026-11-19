@@ -14,23 +14,33 @@ packages. The offsets below are the usual corrections (the same ones the
 kicad-jlcpcb-tools plugin uses). They are a starting point only: always
 check every part in JLCPCB's placement preview before paying.
 
-Run:  python3 make_jlcpcb.py
+Run:  python3 make_jlcpcb.py                 (main board)
+      python3 make_jlcpcb.py test            (4-key test board)
 """
 import csv
 import os
 import re
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC_BOM = os.path.join(HERE, "..", "LMN_v3_revC_BOM.csv")
-SRC_POS = os.path.join(HERE, "..", "LMN_v3_revC_positions.csv")
-OUT_BOM = os.path.join(HERE, "LMN_v3_revC_BOM_JLCPCB.csv")
-OUT_CPL = os.path.join(HERE, "LMN_v3_revC_CPL_JLCPCB.csv")
+if len(sys.argv) > 1 and sys.argv[1] == "test":
+    TB = os.path.join(HERE, "..", "..", "test-board")
+    SRC_BOM = os.path.join(TB, "LMN_HE_test_BOM.csv")
+    SRC_POS = os.path.join(TB, "LMN_HE_test_positions.csv")
+    OUT_BOM = os.path.join(TB, "jlcpcb", "LMN_HE_test_BOM_JLCPCB.csv")
+    OUT_CPL = os.path.join(TB, "jlcpcb", "LMN_HE_test_CPL_JLCPCB.csv")
+else:
+    SRC_BOM = os.path.join(HERE, "..", "LMN_v3_revC_BOM.csv")
+    SRC_POS = os.path.join(HERE, "..", "LMN_v3_revC_positions.csv")
+    OUT_BOM = os.path.join(HERE, "LMN_v3_revC_BOM_JLCPCB.csv")
+    OUT_CPL = os.path.join(HERE, "LMN_v3_revC_CPL_JLCPCB.csv")
 
 # Value (as in the KiCad BOM) -> (comment for JLCPCB, LCSC part, note)
 # B = JLCPCB "Basic" part (no loading fee), E = "Extended" part (loading fee per line).
 LCSC = {
     "100nF":       ("100nF 50V X7R 0805",            "C49678",   "B  YAGEO CC0805KRX7R9BB104"),
     "22uF 10V":    ("22uF 25V X5R 1206",             "C12891",   "B  Samsung CL31A226KAHNNNE (25 V is fine for 10 V)"),
+    "10uF":        ("22uF 25V X5R 1206",             "C12891",   "B  test board C6: 22 uF in place of 10 uF (bulk decoupling, larger is fine)"),
     "0.47uF":      ("470nF 50V X7R 0805",            "C2991591", "E  FH 0805B474K500AT"),
     "1uF":         ("1uF 50V X7R 0805",              "C28323",   "B  Samsung CL21B105KBFNNNE"),
     "330R":        ("330R 1% 0805",                  "C17630",   "   UNI-ROYAL 0805W8F3300T5E"),
