@@ -20,6 +20,7 @@ const uint8_t MIC_BUTTON = 113;        // the new "mic" key
 const uint8_t JOYSTICK_BUTTON = 114;   // joystick click
 const uint8_t MOD_WHEEL = 1;           // joystick Y axis (if switched on)
 const uint8_t MOD_WHEEL_STATE = 115;   // sent when Control + joystick click switches the mod wheel (127 on, 0 off)
+const uint8_t VELOCITY_STATE = 116;    // sent when Control + Tempo switches key velocity (127 on, 0 off = fixed velocity)
 
 // ---------------------------------------------------------------- pins (rev C PCB)
 const uint8_t PIN_MUX_S0 = 0, PIN_MUX_S1 = 1, PIN_MUX_S2 = 2;
@@ -44,6 +45,8 @@ const int16_t NOTE_OFF_POINT  = 100;
 const uint32_t VEL_FAST_US    = 3000;  // <= this -> velocity 127
 const uint32_t VEL_SLOW_US    = 60000; // >= this -> velocity 1
 const float    VEL_CURVE      = 1.4f;  // >1 = need to play harder for loud notes
+const bool     ENABLE_VELOCITY = true;  // the default; Control + Tempo switches it (remembered)
+const uint8_t  FIXED_VELOCITY  = 100;   // what every note gets while velocity is off
 const bool     ENABLE_POLY_AFTERTOUCH = false;   // pressure from the last part of the travel
 const int16_t  AFTERTOUCH_START = 850;
 

@@ -17,6 +17,7 @@ It is derived from FundamentalFrequency/LMN-3-Firmware and is licensed under GPL
 |---|---|
 | Piano keys (24) | Note on at 70 % of travel, with velocity taken from how fast the key moves between 15 % and 70 %. Note off below 10 %. |
 | Menu keys (22) | CC value 127 at 50 % of travel, CC value 0 below 30 %. The CC numbers are the same as the original. |
+| Control + Tempo | Switches key velocity on or off and sends CC 116 (127 = on, 0 = off) so the DAW can say so. While off, every note gets `FIXED_VELOCITY` (100). The Tempo press itself isn't sent. The choice is remembered; `ENABLE_VELOCITY` in `config.h` is only the setting before you first switch it. |
 | Plus / Minus | Pressed alone, they send CC 118/119. With **Control** held, they shift the octave by ±1 on release (CC 117 = octave + 4, range ±4), as the original did. |
 | Encoders | Relative CC 3/9/14/15 (1 = +1 step, 127 = −1 step). Push buttons send CC 20–23. |
 | Joystick X | Pitch bend, now centred properly with a dead zone. |
@@ -65,4 +66,4 @@ The expected scan rate is several kHz.
 g++ -std=c++17 -Itest/mock -Isrc test/test_engine.cpp && ./a.out
 ```
 
-It covers velocity, hysteresis, octave shift with held notes, reversed magnets and auto-ranging.
+It covers velocity, the Control + Tempo velocity switch, hysteresis, octave shift with held notes, reversed magnets and auto-ranging.

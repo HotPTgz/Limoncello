@@ -11,6 +11,7 @@ void midiNoteOn(uint8_t n, uint8_t v) { ev.push_back({'N', n, v}); }
 void midiNoteOff(uint8_t n, uint8_t v) { ev.push_back({'F', n, v}); }
 void midiCC(uint8_t c, uint8_t v) { ev.push_back({'C', c, v}); }
 void midiPolyPressure(uint8_t n, uint8_t p) { ev.push_back({'P', n, p}); }
+void velocityModeChanged(bool on) { ev.push_back({'V', on, 0}); }
 
 Engine e;
 const int REST = 2048, SPAN = 400, SCAN_US = 300;
@@ -84,6 +85,22 @@ int main() {
     CHECK(e.ks[C4].span == 900 && e.spanDirty, "span grows to the real travel and is marked for saving");
     // 10 crossTime / first sample safety
     CHECK(Engine::crossTime(500, 0, 1000, 1000, 2000) == 1500, "crossing time interpolation");
+    // Control + Tempo: velocity off -> fixed velocity, Tempo press not sent to the DAW
+    {
+        const int TEMPO = 8, CTRL = KEY_CONTROL;
+        reset(); idle(CTRL, 5); move(CTRL, 0, 1000, 3000);       // hold Control
+        ev.clear(); move(TEMPO, 0, 1000, 3000); move(TEMPO, 1000, 0, 3000);
+        CHECK(ev.size() == 1 && ev[0].t == 'V' && ev[0].a == 0 && !e.velocityOn, "Control + Tempo switches velocity off, sends no Tempo CC");
+        move(CTRL, 1000, 0, 3000);
+        ev.clear(); idle(C4, 5); move(C4, 0, 1000, 3000); move(C4, 1000, 0, 3000);
+        CHECK(ev.size() == 2 && ev[0].t == 'N' && ev[0].b == FIXED_VELOCITY, "with velocity off a hard press plays at FIXED_VELOCITY");
+        ev.clear(); idle(C4, 5); move(C4, 0, 1000, 50000); move(C4, 1000, 0, 3000);
+        CHECK(ev.size() == 2 && ev[0].b == FIXED_VELOCITY, "... and so does a slow one");
+        ev.clear(); move(TEMPO, 0, 1000, 3000); move(TEMPO, 1000, 0, 3000);
+        CHECK(ev.size() == 2 && ev[0].t == 'C' && ev[0].a == TEMPO_BUTTON, "Tempo alone still sends its CC");
+        move(CTRL, 0, 1000, 3000); ev.clear(); move(TEMPO, 0, 1000, 3000); move(TEMPO, 1000, 0, 3000);
+        CHECK(ev.size() == 1 && ev[0].t == 'V' && ev[0].a == 1 && e.velocityOn, "Control + Tempo again switches velocity back on");
+    }
     printf(fails ? "\n%d FAILED\n" : "\nall tests passed\n", fails);
     return fails != 0;
 }

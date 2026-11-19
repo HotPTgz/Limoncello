@@ -11,6 +11,7 @@ void midiNoteOn(uint8_t note, uint8_t vel);
 void midiNoteOff(uint8_t note, uint8_t vel);
 void midiCC(uint8_t cc, uint8_t val);
 void midiPolyPressure(uint8_t note, uint8_t p);
+void velocityModeChanged(bool on);   // Control + Tempo: store the choice, tell the DAW
 
 enum : uint8_t { K_IDLE = 0, K_ON = 1, K_ARMED = 2 };
 
@@ -32,6 +33,8 @@ struct Engine {
     int8_t transposition = 0;
     bool spanDirty = false;
     uint32_t lastActivityMs = 0;
+    bool velocityOn = ENABLE_VELOCITY;  // off: every note gets FIXED_VELOCITY
+    bool tempoWasToggle = false;        // that Tempo press belonged to Control (no CC)
 
     static uint8_t velocityFromDt(uint32_t dt) {
         if (dt <= VEL_FAST_US) return 127;
@@ -85,7 +88,7 @@ struct Engine {
         if (k.state == K_ARMED) {
             if (k.pos >= VEL_HIGH) {
                 uint32_t tHigh = crossTime(VEL_HIGH, k.prevPos, k.prevT, k.pos, t);
-                k.vel = velocityFromDt(tHigh - k.tLow);
+                k.vel = velocityOn ? velocityFromDt(tHigh - k.tLow) : FIXED_VELOCITY;
                 int n = KEYS[i].id + transposition * 12;
                 k.note = (uint8_t)(n < 0 ? 0 : n > 127 ? 127 : n);
                 k.pressure = 0;
@@ -109,6 +112,17 @@ struct Engine {
     // Same behaviour as the original firmware: Plus/Minus send CC 118/119, or change octave
     // (CC 117 = transposition + 4) on release when pressed while Control is held.
     void menuEvent(uint8_t i, bool pressed) {
+        // Control + Tempo switches key velocity on/off. The Tempo press is used
+        // up here, so the DAW doesn't open the Tempo screen.
+        if (KEYS[i].id == TEMPO_BUTTON) {
+            if (pressed && controlHeld()) {
+                tempoWasToggle = true;
+                velocityOn = !velocityOn;
+                velocityModeChanged(velocityOn);
+                return;
+            }
+            if (!pressed && tempoWasToggle) { tempoWasToggle = false; return; }
+        }
         if (i == KEY_PLUS || i == KEY_MINUS) {
             KeyState &k = ks[i];
             if (pressed) {

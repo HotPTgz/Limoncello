@@ -217,6 +217,19 @@ static void toggleModWheel() {
     midiCC(MOD_WHEEL_STATE, modWheelOn ? 127 : 0);   // LMN-3-DAW shows a message
 }
 
+// Key velocity on/off (Control + Tempo), kept in its own EEPROM byte too.
+static const int VELOCITY_EEPROM = 4001;
+
+static void loadVelocityMode() {
+    uint8_t v = EEPROM.read(VELOCITY_EEPROM);
+    if ((v & 0xFE) == 0xB0) eng.velocityOn = v & 1;
+}
+
+void velocityModeChanged(bool on) {
+    EEPROM.write(VELOCITY_EEPROM, 0xB0 | (on ? 1 : 0));
+    midiCC(VELOCITY_STATE, on ? 127 : 0);   // LMN-3-DAW shows a message
+}
+
 static void updateButtons() {
     uint32_t now = millis();
     for (int b = 0; b < 5; b++) {
@@ -339,6 +352,7 @@ void setup() {
     leds.begin();
     loadStore();
     loadModWheel();
+    loadVelocityMode();
     measureRest();
     // joystick centre
     int32_t ax = 0, ay = 0;
