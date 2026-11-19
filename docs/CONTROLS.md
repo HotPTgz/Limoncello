@@ -27,9 +27,9 @@ Limoncello keeps all of the LMN-3's controls and adds a few. The DAW's screens a
 
 | Control | What it does |
 |---|---|
-| **Joystick left/right** | Pitch bend (as on the LMN-3) |
+| **Joystick left/right** | Pitch bend: ±2 semitones on String, FM and Pulse; 4OSC uses its own range (as on the LMN-3) |
 | **Joystick click** | **Sustain** while held, like a sustain pedal: 4OSC, String, FM, Pulse |
-| **Control + joystick click** | Switches joystick **up/down** as the **mod wheel** on or off. The Teensy remembers it, and the screen says which |
+| **Control + joystick click** | Switches joystick **up/down** as the **mod wheel** on or off. Push up or down for more. On String, FM and Pulse it adds **vibrato** (up to ±50 cents); many VST3 synths respond too, 4OSC and the samplers don't. The Teensy remembers it, and the screen says which |
 | **Control + Tempo** | Switches **key velocity** on or off. Off: every note plays at the same velocity (100), however hard you press. The Teensy remembers it, and the screen says which |
 | **MIC** | **Arms the built-in mic** on the selected track: the next **Record** records sound from it. MIC again turns it off. The Tracks header shows `mic → n`. The mic is never played through the speakers, so it can't howl |
 | **Control + MIC** | **Sample**: make a sound, press MIC again (or wait 20 s). The silence around it is trimmed and the level evened out. Then: |
