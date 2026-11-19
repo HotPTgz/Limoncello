@@ -11,7 +11,7 @@ Limoncello keeps all of the LMN-3's controls and adds a few. The DAW's screens a
 
 | Control | What it does |
 |---|---|
-| Piano keys (24) | Play the selected track, with **velocity**: the built-in synths (String, FM, Pulse) go from soft to loud over 30 dB, 4OSC about 40 dB, the sampler 20 dB. On some screens they also pick things: drum pads, step notes, chord roots |
+| Piano keys (24) | Play the selected track, with **velocity**: the built-in synths (String, FM, Pulse) go from soft to loud over 30 dB; 4OSC is −20 dB at half velocity and almost silent at the softest (its **Amp Velocity** knob narrows that); the sampler spans 20 dB. On some screens they also pick things: drum pads, step notes, chord roots |
 | Octave (Control + Plus / Minus) | Shift the keys ±4 octaves; the piano keys' LED colour shows the octave |
 | Encoders 1–4 | Turn and press. What they do is shown in the four boxes |
 | Control (hold) | Second layer of every encoder; combines with other keys |
