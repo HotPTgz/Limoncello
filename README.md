@@ -27,7 +27,7 @@ It keeps the LMN-3's idea (a Raspberry Pi running a Tracktion-based DAW, a Teens
 | [`enclosure/`](enclosure) | The printed case: OpenSCAD sources and ready-to-print STLs, the flush-key test piece, the power bank cradle, renders |
 | [`firmware/`](firmware) | Teensy 4.1 firmware (PlatformIO): keys, velocity, LEDs, encoders, joystick |
 | Software | The DAW lives in its own repository, because it is GPL: **[HotPTgz/lmn-3-daw, branch `lmn3-v3-wide`](https://github.com/HotPTgz/lmn-3-daw/tree/lmn3-v3-wide)** |
-| [`docs/`](docs) | The [build guide](docs/BUILD.md), [shopping list](docs/SHOPPING_LIST.md), [software setup](docs/SOFTWARE.md), [controls](docs/CONTROLS.md) and [power](docs/POWER.md) |
+| [`docs/`](docs) | The [build guide](docs/BUILD.md), [shopping list](docs/SHOPPING_LIST.md), [software setup](docs/SOFTWARE.md), [controls](docs/CONTROLS.md), [power](docs/POWER.md) and [what has been verified](docs/VERIFICATION.md) |
 
 ## Build it
 
