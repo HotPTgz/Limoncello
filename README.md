@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/images/logo/limoncello_logo.png" alt="Limoncello" width="260"></p>
+
 # Limoncello 🍋🎻
 
 **Limoncello is a successor to the [LMN-3](https://github.com/FundamentalFrequency), the open-source DIY groovebox by Fundamental Frequency.** The LMN-3 is a lemon tree; Limoncello is what you make from the lemons, and it ends in *cello*.
