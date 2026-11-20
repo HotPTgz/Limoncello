@@ -8,6 +8,7 @@
 // parts: top_left top_right tray_left tray_right plate_left plate_right
 //        key_menu key_white key_black  keys_menu_all (22 labelled)  knob
 //        lid_mag_left lid_mag_right lid_slide_left lid_slide_right  assembly
+//        option B (piano-style MX keycaps): top_left_caps top_right_caps deck_left deck_right  assembly_caps
 include <v3_layout.scad>
 
 part = "assembly";
@@ -41,6 +42,20 @@ FLOOR_TOP = Z_TOP - POCKET_DEPTH;        // 20
 KNOB_D = 16; KNOB_GRIP = 12; KNOB_BORE = 6.0; KNOB_HOLE = KNOB_D + 2;
 KNOB_TOP = FLOOR_TOP + KNOB_GRIP;        // 32 = 5 mm above the main top
 KNOB_PROUD = KNOB_TOP - Z_TOP;
+// ---------------- option B: piano-style MX keycaps instead of flush tiles ----------------
+// For the "LMN-3 Key Caps" set (Thingiverse 5996834): 7 mm tall caps; white keys next to a
+// missing black key have an 8.5 mm wide tongue reaching back into the black row.
+// The caps would sit 8 mm below the flat top, so the key area becomes a sunken WELL with a
+// separate DECK plate (printed face down, glued onto a ledge) at the level of the caps.
+KEY_STYLE = "flush";     // default for the assembly view: "flush" or "caps"
+CAP_W = 18.0;  CAP_H = 7.0;
+CAP_TONGUE = 19.0;  CAP_TONGUE_W = 8.5;
+CAP_GAP = 0.5;           // gap between the caps and the deck opening
+DECK_TOP = 15.0;         // caps (top at SEAT_Z + CAP_H = 19.1) stand 4.1 mm proud; 0.6 mm at bottom-out
+DECK_T = 2.5;
+DECK_BOTTOM = DECK_TOP - DECK_T;
+WELL_WALL = 1.6;  LEDGE_W = 1.5;  LEDGE_T = 2.0;  DECK_CLR = 0.25;
+DECK_POSTS = [[95, 128.4], [130, 128.4], [205, 128.4], [240, 128.4]];   // deck -> switch plate, clear of the plate screws
 JOY_HOLE = 27;           // opening for the thumb-joystick gimbal
 JOY_PROUD = 8;           // how far the joystick cap stands above the top (for the lids)
 
@@ -87,12 +102,15 @@ module grille(c) {        // round-hole speaker grille, 34 mm field
         if (x * x + y * y < 16.5 * 16.5) translate([T(c)[0] + x, T(c)[1] + y]) circle(d = 1.8, $fn = 12);
     }
 }
-module top_openings() {
+module top_openings(caps = false) {
     // screen window, centred on the module
     sc = [(SCREEN[0] + SCREEN[2]) / 2, (SCREEN[1] + SCREEN[3]) / 2];
     translate(T(sc)) offset(1) square([SCREEN_WIN[0] - 2, SCREEN_WIN[1] - 2], center = true);
-    for (k = KEYS) translate(T([k[1], k[2]])) offset(1) square([OPENING - 2, OPENING - 2], center = true);
-    pocket_2d();
+    if (caps) well_2d();
+    else {
+        for (k = KEYS) translate(T([k[1], k[2]])) offset(1) square([OPENING - 2, OPENING - 2], center = true);
+        pocket_2d();
+    }
     translate(T(JOYSTICK)) circle(d = JOY_HOLE);
     for (s = SPEAKERS) grille(s);
     translate(T(MIC)) circle(d = 1.6, $fn = 16);
@@ -106,12 +124,48 @@ module pocket_body() {   // walls + floor of the sunken encoder pocket
         for (e = ENCODERS) translate(T(e)) circle(d = KNOB_HOLE);
     }
 }
-module top_shell() {
+// ---------------- option B geometry (board coords in, OpenSCAD coords out) ----------------
+function keyx(t) = [for (k = KEYS) if (k[3] == t) k[1]];
+function keyy(t) = [for (k = KEYS) if (k[3] == t) k[2]];
+MENU_BLOCK  = [min(keyx(0)) - CAP_W / 2, min(keyy(0)) - CAP_W / 2, max(keyx(0)) + CAP_W / 2, max(keyy(0)) + CAP_W / 2];
+PIANO_BLOCK = [min(keyx(1)) - CAP_W / 2, min(keyy(2)) - CAP_W / 2, max(keyx(1)) + CAP_W / 2, max(keyy(1)) + CAP_W / 2];
+module bx(x0, y0, x1, y1) translate([x0, 180 - y1]) square([x1 - x0, y1 - y0]);
+module well_2d() offset(r = 2) offset(delta = -2) offset(r = -3) offset(r = 3) union() {
+    bx(MENU_BLOCK[0] - 3, MENU_BLOCK[1] - 2.5, MENU_BLOCK[2] + 6, PIANO_BLOCK[1] + 1);   // menu keys (+ strip)
+    bx(PIANO_BLOCK[0] - 3, PIANO_BLOCK[1] - 3, PIANO_BLOCK[2] + 3, PIANO_BLOCK[3] + 2.5);
+    bx(POCKET[0], POCKET[1] + 0.5, POCKET[2], POCKET[3]);                               // encoders
+}
+module deck_windows() {
+    bx(MENU_BLOCK[0] - CAP_GAP, MENU_BLOCK[1] - CAP_GAP, MENU_BLOCK[2] + CAP_GAP, MENU_BLOCK[3] + CAP_GAP);
+    bx(PIANO_BLOCK[0] - CAP_GAP, PIANO_BLOCK[1] - CAP_GAP, PIANO_BLOCK[2] + CAP_GAP, PIANO_BLOCK[3] + CAP_GAP);
+    for (e = ENCODERS) translate(T(e)) circle(d = KNOB_HOLE);
+}
+module well_body() {   // the well's walls, from the panel down to the ledge the deck sits on
+    translate([0, 0, DECK_BOTTOM - LEDGE_T]) linear_extrude(Z_TOP - PANEL_T - DECK_BOTTOM + LEDGE_T + 0.01)
+        difference() { offset(WELL_WALL) well_2d(); well_2d(); }
+    translate([0, 0, DECK_BOTTOM - LEDGE_T]) linear_extrude(LEDGE_T) difference() { well_2d(); offset(-LEDGE_W) well_2d(); }
+}
+module deck() {
+    translate([0, 0, DECK_BOTTOM]) linear_extrude(DECK_T) difference() { offset(-DECK_CLR) well_2d(); deck_windows(); }
+    for (p = DECK_POSTS) at(p) translate([0, 0, PLATE_TOP + 0.2]) cylinder(d = 4, h = DECK_BOTTOM - PLATE_TOP - 0.2 + 0.01);
+}
+// a keycap stand-in: white keys next to a missing black key get the tongue towards it
+function has_black(x) = len([for (k = KEYS) if (k[3] == 2 && abs(k[1] - x) < 1) 1]) > 0;
+module cap_2d(k) {
+    offset(1) square(CAP_W - 2, center = true);
+    if (k[3] == 1 && !has_black(k[1] - 9.525))   // tongue on the left, reaching back (-y board = +Y)
+        translate([-CAP_W / 2, CAP_W / 2 - 0.4]) square([CAP_TONGUE_W, CAP_TONGUE + 0.4]);
+    if (k[3] == 1 && !has_black(k[1] + 9.525))
+        translate([CAP_W / 2 - CAP_TONGUE_W, CAP_W / 2 - 0.4]) square([CAP_TONGUE_W, CAP_TONGUE + 0.4]);
+}
+module caps_at(dz) for (k = KEYS) at([k[1], k[2]]) translate([0, 0, SEAT_Z - dz]) linear_extrude(CAP_H) cap_2d(k);
+
+module top_shell(caps = false) {
     sc = [(SCREEN[0] + SCREEN[2]) / 2, (SCREEN[1] + SCREEN[3]) / 2];
     difference() {
         union() {
             // panel
-            translate([0, 0, Z_TOP - PANEL_T]) linear_extrude(PANEL_T) difference() { outline(); top_openings(); }
+            translate([0, 0, Z_TOP - PANEL_T]) linear_extrude(PANEL_T) difference() { outline(); top_openings(caps); }
             // walls down to the PCB underside
             translate([0, 0, -PCB_T]) linear_extrude(Z_TOP - PANEL_T + PCB_T + 0.01) difference() { outline(); inner(); }
             // screws: bosses from the panel down onto the PCB top (M3 heat-set inserts from below)
@@ -128,7 +182,7 @@ module top_shell() {
             // speakers: retaining rings under the grille (40 mm speaker flange)
             for (s = SPEAKERS) at(s) translate([0, 0, Z_TOP - PANEL_T - 5]) difference() {
                 cylinder(d = 45, h = 5.01); translate([0, 0, -1]) cylinder(d = 40.3, h = 7); }   // press fit + glue
-            pocket_body();
+            if (caps) well_body(); else pocket_body();
             // mic: acoustic tube from the pinhole down to the capsule
             at(MIC) translate([0, 0, 5.6]) cylinder(d = 5, h = Z_TOP - 5.6 - 0.1);
             // magnet bosses for the magnetic lid
@@ -144,7 +198,8 @@ module top_shell() {
         at(JACK) translate([5.5, 0, 2.6]) rotate([0, 90, 0]) cylinder(d = 7.5, h = 10);   // headphone jack
         slide_grooves();
         // keep the pocket clear (cuts the (285,86) screw boss down to the pocket floor)
-        translate([0, 0, FLOOR_TOP]) linear_extrude(20) pocket_2d();
+        if (caps) translate([0, 0, DECK_BOTTOM]) linear_extrude(20) well_2d();   // the boss then also props up the deck
+        else translate([0, 0, FLOOR_TOP]) linear_extrude(20) pocket_2d();
         // rear vents in the air space between the PCB and the screen (Pi cooler pokes up through the PCB here)
         for (x = [116:6:192]) translate([x, Y1 - WALL - 1, 0.8]) cube([3, WALL + 2, 4.2]);
         // print split: 1.75 mm filament dowels through the seam in the front and rear walls
@@ -290,16 +345,26 @@ module right() { intersection() { children(); translate([SPLIT_X, -50, -100]) cu
 module flip_top() { translate([0, 0, Z_TOP]) mirror([0, 0, 1]) children(); }          // top surface on the bed
 module tile_print(t, lab) { mirror([0, 0, 1]) translate([0, 0, -(t == 2 ? Z_TOP + BLACK_UP : Z_TOP)]) tile(t == 2 ? Z_TOP + BLACK_UP : Z_TOP, lab); }
 
-module assembly() {
+module assembly(caps = KEY_STYLE == "caps") {
     pcb_dummy();
-    color([0.92, 0.92, 0.9]) top_shell();
+    color([0.92, 0.92, 0.9]) top_shell(caps);
     color([0.75, 0.75, 0.75]) tray();
     color([0.3, 0.3, 0.3]) plate();
+    if (caps) {
+        color([0.88, 0.88, 0.86]) deck();
+        for (k = KEYS) at([k[1], k[2]]) color(k[3] == 2 || k[4] == "MIC" ? [0.12, 0.12, 0.12] : [0.97, 0.97, 0.97])
+            translate([0, 0, SEAT_Z]) linear_extrude(CAP_H) cap_2d(k);
+    } else
     for (k = KEYS) at([k[1], k[2]]) color(k[3] == 2 ? [0.12, 0.12, 0.12] : [0.97, 0.97, 0.97]) tile(k[3] == 2 ? Z_TOP + BLACK_UP : Z_TOP, k[4]);
     for (e = ENCODERS) at(e) color([0.2, 0.2, 0.2]) knob();
 }
 
 if (part == "assembly") assembly();
+else if (part == "assembly_caps") assembly(true);
+else if (part == "top_left_caps")  flip_top() left() top_shell(true);
+else if (part == "top_right_caps") flip_top() right() top_shell(true);
+else if (part == "deck_left")  translate([0, 0, DECK_TOP]) mirror([0, 0, 1]) left() deck();     // top face on the bed, posts up
+else if (part == "deck_right") translate([0, 0, DECK_TOP]) mirror([0, 0, 1]) right() deck();
 else if (part == "top_left")    flip_top() left() top_shell();
 else if (part == "top_right")   flip_top() right() top_shell();
 else if (part == "tray_left")   translate([0, 0, -(FLOOR_Z - FLOOR_T)]) left() tray();

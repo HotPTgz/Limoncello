@@ -1,5 +1,7 @@
 # Limoncello enclosure: flat top
 
+There are two versions of the key area. The default is below; **option B** uses piano-style MX keycaps instead (see [Option B](#option-b-piano-style-keycaps-instead-of-the-flush-tiles)).
+
 The screen glass, both speaker grilles and the keys are flush with one flat top surface.
 - The glass sits 1 mm below the top. A 1 mm lip covers its black border, so a dropped object or the table never touches it.
 - The black piano keys stand 1.5 mm proud.
@@ -39,6 +41,47 @@ The `components/` renders show the electronics alone. The Pi 5 is Raspberry Pi's
 | `cradle.stl` | 1 (optional) | **PETG**, 4 walls, 20 % | Power bank cradle, see below. Prints standing on its base, no supports. |
 
 White or translucent keys let the per-key RGB LEDs glow through the keys and the gaps around them.
+
+## Option B: piano-style keycaps (instead of the flush tiles)
+
+![keycap version](render_caps.png)
+
+Uses the **"LMN-3 Key Caps"** set from Thingiverse ([thing 5996834](https://www.thingiverse.com/thing:5996834)): MX keycaps 7 mm tall, with icons on the menu keys and white piano keys that reach back between the black keys. The caps aren't in this repo; download and print them from Thingiverse, under the author's licence.
+
+The caps sit 8 mm lower than the flush tiles, so the key area becomes a **sunken well**:
+- The well floor (the **deck**) is 12 mm below the flat top. The caps stand **4.1 mm proud** of it, and 0.6 mm when pressed fully.
+- The encoders sit in the same well. The knobs are the same; more of their grip shows.
+- The screen, speakers, joystick, lids and tray are unchanged. Both lids still close: the caps stay well below the top.
+- The deck is a separate part, printed face down so its surface is as smooth as the top. It drops into the well onto a 1.5 mm ledge, and 4 short posts rest it on the switch plate. Glue it to the ledge (a few dots of CA).
+- Checked like the rest: no collisions with the caps at rest or fully pressed, and the tongues of the white keys clear the black keys by 1.0 mm.
+
+**Print these instead of** `top_left/right.stl`, `keys_menu_all.stl`, `key_white.stl` and `key_black.stl`. You don't need the flush-key test piece.
+
+| File | Qty | Notes |
+|---|---|---|
+| `top_left_caps.stl`, `top_right_caps.stl` | 1 each | Same settings as the normal top. The ledge at the bottom of the well walls is a small overhang (1.5 mm); no supports needed. |
+| `deck_left.stl`, `deck_right.stl` | 1 each | Top face on the bed, posts up, no supports. Same colour as the top. |
+| Keycaps (Thingiverse) | 1 set | `Tray_1_White` in white, `Tray_2_Black` in black. Print a spare black cap for MIC if your set has none left. |
+
+**Which cap goes where.** The set was made for the original LMN-3. Limoncello keeps its piano exactly, and has the same menu functions plus MIC:
+
+| Key | Cap |
+|---|---|
+| White piano keys C, F (both octaves) | white, tongue on the **left** |
+| White piano keys E, B (both octaves) | white, tongue on the **right** |
+| White piano keys D, G, A | plain white (6) |
+| Black piano keys | black (10) |
+| LOOP, IN, OUT | loop arrows; arrow into a bracket; arrow out of a bracket |
+| CUT, PASTE, SLICE | scissors; two pages; saw-tooth |
+| SAVE, UNDO, TEMPO | arrow into a box; curved arrow; clock |
+| −, + | minus; plus |
+| CTRL | lemon |
+| REC, PLAY, STOP | circle; triangle; rounded square |
+| MIC | **spare black cap** (the set has 12 black, the piano uses 10) |
+| SET, MIX, TRACK | gear; three bars; timeline |
+| PLUG, MOD, SEQ | plug; square wave; grid |
+
+To use other MX keycaps, change `CAP_H` and `DECK_TOP` in `source/lmn3_v3_case.scad` (and `CAP_TONGUE*` if your piano caps differ), then re-export the four parts.
 
 ## Hardware
 - 6 × M3 heat-set inserts (M3 × 5.7 mm) in the top-shell bosses.

@@ -19,7 +19,7 @@ The main board is big and costs about $80 to make. A 4-key test board with the s
 
 - Files and instructions: [`hardware/test-board/`](../hardware/test-board).
 - Order it from JLCPCB, solder it, flash the test sketch on a Teensy 4.1, and check that each key gives a smooth reading from rest to fully pressed and that the LEDs light.
-- **Print the flush-key test piece too** ([`enclosure/flush_test/`](../enclosure/flush_test)). It sits on the test board and has four key openings, each with a different gap (0.35 / 0.45 / 0.55 / 0.65 mm). Play them and pick the gap with no rubbing and no wobble. Then set `GAP` in [`enclosure/source/lmn3_v3_case.scad`](../enclosure/source/lmn3_v3_case.scad) and re-export the keys and top shell (see step 6).
+- **Print the flush-key test piece too** ([`enclosure/flush_test/`](../enclosure/flush_test)). It sits on the test board and has four key openings, each with a different gap (0.35 / 0.45 / 0.55 / 0.65 mm). Play them and pick the gap with no rubbing and no wobble. Then set `GAP` in [`enclosure/source/lmn3_v3_case.scad`](../enclosure/source/lmn3_v3_case.scad) and re-export the keys and top shell (see step 6). You only need it for the flush keys, not for the keycap option (step 6).
 
 ## 2. Order the parts and the board
 
@@ -78,6 +78,9 @@ All the STL files are also in one zip: [`enclosure/Limoncello_STL.zip`](../enclo
   - a magnetic or a slide-on lid (or both);
   - the optional power bank cradle.
 - **Materials:** use white or translucent filament for the keys, so the LEDs glow through. Use PETG for the switch plate and the cradle.
+- **Keys: choose one of two looks.**
+  - **Flush tiles (default):** the keys are flat tiles flush with the top; the black keys stand 1.5 mm proud. Print `top_left/right`, the tiles and the menu keys.
+  - **Piano-style keycaps (option B):** the "LMN-3 Key Caps" from Thingiverse, with icons on the menu keys, in a sunken key well. Print `top_left_caps/right_caps` and `deck_left/right` instead of the normal top and tiles, plus the keycaps from Thingiverse. Which cap goes where: [enclosure README → Option B](../enclosure/README.md#option-b-piano-style-keycaps-instead-of-the-flush-tiles).
 - **Changing something:** every dimension is a parameter in [`lmn3_v3_case.scad`](../enclosure/source/lmn3_v3_case.scad). Export a part with `openscad -D 'part="top_left"' -o top_left.stl lmn3_v3_case.scad`. The part names are listed at the top of the file.
 
 ## 7. Put it together

@@ -42,3 +42,9 @@ if (test == "g_highest") union() { knobs_v(); tiles_at(0); joystick_v(); }
 if (test == "g_cooler") translate([133, T([0, 50])[1], -12.6]) cube([63.5, 42.5, 10.5]);
 if (test == "g_screen") screen_mod();
 if (test == "g_pcbreal") translate([0,0,-PCB_T]) linear_extrude(PCB_T) difference() { square([330,180]); translate(T([0, 0])) mirror([0, 1]) polygon(PCB_OPENING); }
+// option B: keycaps in a sunken well
+if (test == "g_top_caps") top_shell(true);
+if (test == "g_deck") deck();
+if (test == "g_caps0") caps_at(0);
+if (test == "g_caps1") caps_at(TRAVEL);
+if (test == "g_caps1_rings") for (k = KEYS) at([k[1], k[2]]) translate([0, 0, SEAT_Z - TRAVEL]) linear_extrude(CAP_H) difference() { cap_2d(k); square(15.6, center = true); }
